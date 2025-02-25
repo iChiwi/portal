@@ -1,0 +1,120 @@
+@use "variables" as vars;
+
+@media (max-width: 768px) {
+  .nav-content {
+    position: relative; // ensure absolute children are positioned relative to this
+    display: flex;
+    justify-content: center; // center other content if needed
+    align-items: center; // centers children vertically
+    padding: 0 20px;
+  }
+
+  /* Hamburger styles */
+  .hamburger {
+    position: absolute; // position independently of flex order
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: none;
+  }
+
+  .utility-buttons {
+    margin: 0;
+    position: static;
+    order: 1;
+  }
+
+  /* Language-specific positioning: Flip orders in rtl */
+  html[dir="ltr"] .hamburger {
+    left: 30px;
+    right: auto;
+  }
+  html[dir="ltr"] .utility-buttons {
+    left: auto;
+    right: 30px;
+  }
+  html[dir="rtl"] .hamburger {
+    right: 30px;
+    left: auto;
+    order: 1;
+  }
+  html[dir="rtl"] .utility-buttons {
+    right: auto;
+    left: 30px;
+    order: 0;
+  }
+
+  .hamburger span {
+    background-color: vars.$text-white;
+    height: 3px;
+    width: 25px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg);
+  }
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg);
+  }
+
+  // LTR (default)
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg);
+  }
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg);
+  }
+
+  /* For RTL, flip the arrow transforms */
+  html[dir="rtl"] .hamburger.active span:nth-child(1) {
+    transform: rotate(-45deg);
+  }
+  html[dir="rtl"] .hamburger.active span:nth-child(3) {
+    transform: rotate(45deg);
+  }
+
+  /* Nav-links styles */
+  .nav-content .nav-links {
+    background-color: vars.$dark-navy;
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 60px;
+    text-align: center;
+    z-index: 1000;
+  }
+  /* When toggled, show the nav links */
+  .nav-content .nav-links.active {
+    display: flex !important;
+  }
+
+  /* Other mobile adjustments */
+  header {
+    margin-top: 0;
+  }
+
+  .scroll-top {
+    bottom: 80px;
+    height: 35px;
+    right: 15px;
+    width: 35px;
+  }
+
+  .nav-container {
+    position: sticky;
+    top: 0;
+  }
+}

@@ -1,0 +1,43 @@
+@use "../core/variables" as vars;
+
+form {
+  display: flex;
+  flex-direction: column;
+
+  input {
+    &[type="text"],
+    &[type="file"],
+    &[type="password"] {
+      border: 1px solid vars.$neutral-clay;
+      border-radius: 4px;
+      font-size: 1rem;
+      margin-bottom: 15px;
+      padding: 10px;
+    }
+  }
+
+  select {
+    border: 1px solid vars.$neutral-clay;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+
+  label {
+    display: block;
+    font-weight: 600;
+    margin: 10px 0 5px;
+  }
+}
+
+#search-form {
+  input[type="text"] {
+    border: 1px solid vars.$border-light;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin: 8px 0;
+    padding: 8px;
+    width: 100%;
+  }
+}

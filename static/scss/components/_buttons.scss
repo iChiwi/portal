@@ -1,0 +1,291 @@
+@use "../core/variables" as vars;
+
+#signin-button {
+  // CHECK THIS IF USED
+  margin: 8px 0;
+  width: 100%;
+}
+
+#submit-button:disabled {
+  background-color: vars.$text-disabled;
+  color: vars.$neutral-clay;
+  cursor: wait;
+}
+
+.code-button {
+  background: none;
+  border: none;
+  color: vars.$text-white;
+  font-size: 16px;
+  font-weight: 700;
+  left: 10px;
+  position: absolute;
+  text-decoration: none;
+  top: 10px;
+}
+
+.google-signin-btn {
+  align-items: center;
+  background-color: vars.$accent-blue;
+  border: none;
+  border-radius: 4px;
+  color: vars.$text-white;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 16px;
+  gap: 8px;
+  justify-content: center;
+  min-width: 200px;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+  width: 100%;
+
+  .fa-spinner {
+    margin-right: 8px;
+  }
+
+  &:disabled {
+    background-color: vars.$text-disabled;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  &:hover {
+    background-color: vars.$dark-navy;
+    box-shadow: 0 2px 4px vars.$base-shadow;
+    transform: translateY(-1px);
+  }
+}
+
+.home-button,
+.admin-button {
+  background: none;
+  border: none;
+  color: vars.$text-white;
+  font-size: 16px;
+  font-weight: 700;
+  position: absolute;
+  right: 10px;
+  text-decoration: none;
+  top: 10px;
+}
+
+button {
+  background-color: vars.$accent-blue;
+  border: none;
+  border-radius: 4px;
+  color: vars.$text-white;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 12px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: vars.$dark-navy;
+  }
+}
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: vars.$text-white;
+  border: 1px solid vars.$neutral-clay;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px vars.$base-shadow;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%;
+
+  option {
+    padding: 12px;
+
+    &:not([value=""]) {
+      color: vars.$dark-navy;
+    }
+  }
+
+  &:focus {
+    border-color: vars.$accent-blue;
+    box-shadow: 0 0 0 2px vars.$navy-shadow;
+    outline: none;
+  }
+
+  &:hover {
+    border-color: vars.$accent-blue;
+  }
+
+  &:required:invalid,
+  option[value=""],
+  &:required:invalid,
+  option[value=""] {
+    color: vars.$neutral-clay;
+  }
+
+  option:not([value=""]) {
+    color: vars.$text-color-light;
+  }
+}
+
+.nav-button {
+  border-radius: 4px;
+  color: vars.$text-white;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 20px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    background: none;
+    color: vars.$accent-blue;
+  }
+}
+
+.scroll-top {
+  align-items: center;
+  background-color: vars.$accent-blue;
+  border: none;
+  border-radius: 50%;
+  bottom: 20px;
+  box-shadow: 0 2px 5px vars.$base-shadow;
+  color: vars.$text-white;
+  cursor: pointer;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  opacity: 0;
+  position: fixed;
+  right: 20px;
+  transition: all 0.3s ease;
+  visibility: hidden;
+  width: 40px;
+  z-index: 1001;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.utility-buttons {
+  display: flex;
+  gap: 20px;
+  left: 30px;
+  margin-right: auto;
+  margin-right: auto;
+  order: 1;
+  position: absolute;
+}
+
+#chapter-select {
+  option:not([value=""]) {
+    color: vars.$text-color-light;
+  }
+
+  option[value=""] {
+    color: vars.$neutral-clay;
+  }
+
+  select {
+    width: 100%;
+  }
+}
+
+#subject-select {
+  option[value=""] {
+    color: vars.$neutral-clay;
+  }
+
+  option:not([value=""]) {
+    color: vars.$text-color-light;
+  }
+
+  &:required:invalid,
+  option[value=""] {
+    color: vars.$neutral-clay;
+  }
+
+  select {
+    width: 100%;
+  }
+}
+
+.utility-btn {
+  background: none;
+  border: none;
+  color: vars.$text-white;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 8px;
+  transition: transform 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    color: vars.$accent-blue;
+    transform: scale(1.1);
+    color: vars.$accent-blue;
+  }
+}
+
+input {
+  &[type="file"] {
+    background-color: vars.$text-white;
+    border: 1px solid vars.$text-disabled;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: vars.$text-color-light;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 8px 0;
+    padding: 12px;
+    width: calc(100%);
+    background-color: vars.$text-white;
+    border: 1px solid vars.$text-disabled;
+    border-radius: 4px;
+    font-size: 16px;
+    margin: 8px 0;
+    padding: 12px;
+    transition: border-color 0.3s ease;
+    width: 100%;
+  }
+
+  &[type="text"] {
+    background-color: vars.$text-white;
+    border: 1px solid vars.$text-disabled;
+    border-radius: 4px;
+    font-size: 16px;
+    margin: 8px 0;
+    padding: 12px;
+    transition: border-color 0.3s ease;
+    width: 100%;
+  }
+
+  &[type="file"] {
+    &::-webkit-file-upload-button,
+    &::file-selector-button {
+      background-color: vars.$accent-blue;
+      border: 1px solid vars.$text-disabled;
+      border-radius: 4px;
+      color: vars.$text-white;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 12px;
+      padding: 8px 12px;
+      transition: background-color 0.3s ease;
+    }
+
+    &::-webkit-file-upload-button:hover,
+    &::file-selector-button:hover {
+      background-color: vars.$dark-navy;
+    }
+  }
+
+  &[type="text"]:focus {
+    border-color: vars.$accent-blue;
+    box-shadow: 0 0 0 2px vars.$navy-shadow;
+    outline: none;
+  }
+}

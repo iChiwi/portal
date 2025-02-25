@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lookup — Student Helper</title>
+    <link rel="stylesheet" href="static/css/main.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="static/img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="static/img/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="static/img/favicon-16x16.png"
+    />
+    <link rel="manifest" href="static/img/site.webmanifest" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="static/js/layout/theme.js"></script>
+    <script src="static/js/translations.js"></script>
+  </head>
+  <body>
+    <nav class="nav-container">
+      <div class="nav-content">
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="utility-buttons">
+          <button
+            id="theme-toggle"
+            class="utility-btn"
+            aria-label="Toggle dark mode"
+          >
+            <i class="fas fa-moon"></i>
+          </button>
+          <button
+            id="lang-toggle"
+            class="utility-btn"
+            aria-label="Toggle language"
+          >
+            <i class="fas fa-language"></i>
+          </button>
+        </div>
+        <div class="nav-links">
+          <a href="index.html" class="nav-button" data-translate>GO HOME</a>
+          <a href="student.html" class="nav-button" data-translate
+            >STUDENT PORTAL</a
+          >
+          <a href="lookup.html" class="nav-button" data-translate
+            >STUDENT LOOKUP</a
+          >
+        </div>
+      </div>
+    </nav>
+    <header>
+      <div class="header-content">
+        <h1 data-translate>Student Lookup</h1>
+        <p data-translate>Search for student university code.</p>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <section id="search-section">
+          <form id="search-form" novalidate>
+            <h2 data-translate>Student Lookup</h2>
+            <div id="national-search">
+              <label for="national-number" data-translate
+                >National ID Number:</label
+              >
+              <input
+                type="text"
+                id="national-number"
+                name="national-number"
+                minlength="14"
+                maxlength="14"
+                required
+              />
+            </div>
+            <button type="submit" data-translate>Search</button>
+          </form>
+          <div id="search-result"></div>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <p>
+        <span data-translate>Made with</span> <span class="heart">❤︎</span>
+        <span data-translate>by</span>
+        <b
+          ><a href="https://github.com/iChiwi/"
+            ><span data-translate>Noor Tantawy</span></a
+          ></b
+        >
+      </p>
+    </footer>
+    <script>
+      const form = document.getElementById("search-form");
+      const searchResult = document.getElementById("search-result");
+
+      const nationalInput = document.getElementById("national-number");
+      nationalInput.addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, "");
+        if (this.value.length === 14) {
+          this.classList.add("valid");
+        } else {
+          this.classList.remove("valid");
+        }
+      });
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const nationalNumber = nationalInput.value.trim();
+        if (nationalNumber.length !== 14) {
+          showError("National ID must be 14 digits");
+          return;
+        }
+
+        searchResult.innerHTML = `
+            <div class="loading-spinner" role="status">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span data-translate>Searching...</span>
+            </div>`;
+
+        try {
+          const response = await fetch(
+            "ENTER_API_LINK_HERE", // DON'T FORGET TO PUT FETCH CODE API LINK HERE, THIS IS NOT PROVIDED
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              credentials: "include",
+              mode: "cors",
+              body: JSON.stringify({ national_number: nationalNumber }),
+            }
+          );
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || "Server error");
+          }
+
+          if (data.student_code === "N/A") {
+            showError(
+              "Could not find the student. Please check the information and try again."
+            );
+            return;
+          }
+
+          // Show success result
+          searchResult.innerHTML = `
+                <div class="result-container">
+                    <h3 data-translate>Student Information</h3>
+                    <p><strong data-translate>Name:</strong> ${data.student_name}</p>
+                    <p><strong data-translate>Code:</strong> ${data.student_code}</p>
+                    <p><strong data-translate>Phase:</strong> ${data.phase_name}</p>
+                </div>`;
+        } catch (error) {
+          showError("Connection error. Please try again later.");
+          console.error("Error:", error);
+        }
+
+        storeOriginalTexts();
+        setLanguage(localStorage.getItem("lang") || "ar");
+      });
+
+      function showError(message) {
+        searchResult.innerHTML = `
+            <div class="result-error" role="alert">
+                <i class="fas fa-exclamation-circle"></i>
+                <span data-translate data-original="${message}">${message}</span>
+            </div>`;
+
+        storeOriginalTexts();
+        setLanguage(localStorage.getItem("lang") || "ar");
+      }
+    </script>
+    <script src="static/js/layout/nav.js"></script>
+    <button class="scroll-top" aria-label="Scroll to top">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M18 15l-6-6-6 6" />
+      </svg>
+    </button>
+  </body>
+</html>

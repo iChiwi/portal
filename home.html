@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home — Student Helper</title>
+    <link rel="stylesheet" href="static/css/main.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="static/img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="static/img/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="static/img/favicon-16x16.png"
+    />
+    <link rel="manifest" href="static/img/site.webmanifest" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="static/js/layout/theme.js"></script>
+    <script src="static/js/translations.js"></script>
+  </head>
+  <body>
+    <nav class="nav-container">
+      <div class="nav-content">
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="utility-buttons">
+          <button
+            id="theme-toggle"
+            class="utility-btn"
+            aria-label="Toggle dark mode"
+          >
+            <i class="fas fa-moon"></i>
+          </button>
+          <button
+            id="lang-toggle"
+            class="utility-btn"
+            aria-label="Toggle language"
+          >
+            <i class="fas fa-language"></i>
+          </button>
+        </div>
+        <div class="nav-links" id="nav-links">
+          <a href="student.html" class="nav-button" data-translate
+            >STUDENT PORTAL</a
+          >
+          <a href="lookup.html" class="nav-button" data-translate
+            >STUDENT LOOKUP</a
+          >
+          <a href="links.html" class="nav-button" data-translate>GROUP LINKS</a>
+          <a href="admin.html" class="nav-button" data-translate
+            >ADMIN PORTAL</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <header>
+      <div class="header-content">
+        <h1 data-translate>Student Helper</h1>
+        <p data-translate>
+          Your one-stop platform for academic resources and tools
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <section class="info-section">
+          <h2 data-translate>Portal Features</h2>
+          <div class="features-grid">
+            <a class="feature-card" href="student.html">
+              <i class="fas fa-book"></i>
+              <h3 data-translate>Study Materials</h3>
+              <p data-translate>
+                Access subject summaries and study materials created by student
+                leaders
+              </p>
+            </a>
+            <a class="feature-card" href="lookup.html">
+              <i class="fas fa-search"></i>
+              <h3 data-translate>Student Lookup</h3>
+              <p data-translate>Find your university student code</p>
+            </a>
+            <a class="feature-card" href="links.html">
+              <i class="fas fa-users"></i>
+              <h3 data-translate>Group Links</h3>
+              <p data-translate>
+                Access all official student group and community links
+              </p>
+            </a>
+            <a class="feature-card" href="admin.html">
+              <i class="fas fa-upload"></i>
+              <h3 data-translate>Material Upload</h3>
+              <p data-translate>
+                Student leaders can upload and manage study materials
+              </p>
+            </a>
+          </div>
+        </section>
+
+        <section class="info-section">
+          <h2 data-translate>Need Help?</h2>
+          <div class="help-card">
+            <p data-translate>
+              If you encounter any issues or errors while using the portal,
+              please verify status and contact me after:
+            </p>
+            <div class="contact-info">
+              <a href="status.html" class="contact-link">
+                <i class="fas fa-info-circle"></i>
+                <span data-translate>Check System Status</span>
+              </a>
+              <a
+                href="https://wa.me/201152961437"
+                target="_blank"
+                rel="noopener"
+                class="contact-link"
+              >
+                <i class="fab fa-whatsapp"></i>
+                <span data-translate>Contact on WhatsApp</span>
+              </a>
+              <a
+                href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=noortantawy43@gmail.com&su=Issue:+Portal"
+                target="_blank"
+                class="contact-link"
+              >
+                <i class="fas fa-envelope"></i>
+                <span data-translate>Send an E-mail</span>
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        <span data-translate>Made with</span> <span class="heart">❤︎</span>
+        <span data-translate>by</span>
+        <b
+          ><a href="https://github.com/iChiwi/"
+            ><span data-translate>Noor Tantawy</span></a
+          ></b
+        >
+      </p>
+    </footer>
+
+    <script src="static/js/layout/nav.js"></script>
+    <button class="scroll-top" aria-label="Scroll to top">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M18 15l-6-6-6 6" />
+      </svg>
+    </button>
+  </body>
+</html>

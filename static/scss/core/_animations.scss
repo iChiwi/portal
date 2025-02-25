@@ -1,0 +1,30 @@
+@use "../core/variables" as vars;
+
+@keyframes loading {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 vars.$green-shadow;
+  }
+  70% {
+    box-shadow: 0 0 0 7px vars.$green-shadow;
+  }
+  100% {
+    box-shadow: 0 0 0 0 vars.$green-shadow;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

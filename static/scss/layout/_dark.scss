@@ -1,0 +1,268 @@
+@use "../core/variables" as vars;
+
+[data-theme="dark"] {
+  background-color: vars.$background-dark;
+  color: vars.$text-color-dark;
+
+  .container,
+  section,
+  .folder-embed {
+    background-color: vars.$container-dark;
+    border-color: vars.$border-dark;
+  }
+
+  main {
+    background-color: vars.$background-dark;
+  }
+
+  label,
+  h2,
+  h3,
+  .data-theme-text,
+  #material-content p,
+  .files-list a,
+  .chapter-files a {
+    color: vars.$text-color-dark;
+  }
+
+  section {
+    h2,
+    h3 {
+      color: vars.$text-color-dark;
+    }
+  }
+
+  input,
+  select,
+  input[type="file"],
+  input[type="text"] {
+    background-color: vars.$container-dark;
+    border-color: vars.$border-dark;
+    color: vars.$text-color-dark;
+  }
+
+  .loading {
+    color: vars.$text-muted;
+  }
+
+  select {
+    &:required:invalid,
+    option[value=""] {
+      color: vars.$text-muted;
+    }
+
+    option {
+      background-color: vars.$container-dark;
+      color: vars.$text-color-dark;
+
+      &:not([value=""]) {
+        background-color: vars.$container-dark;
+        color: vars.$text-color-dark;
+      }
+
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: vars.$dark-navy;
+        color: vars.$text-white;
+      }
+    }
+  }
+
+  #subject-select,
+  #chapter-select {
+    option {
+      background-color: vars.$container-dark;
+      color: vars.$text-color-dark;
+    }
+  }
+
+  #subject-select {
+    &:required:invalid,
+    option[value=""] {
+      color: vars.$text-muted;
+    }
+
+    color: vars.$text-color-dark;
+  }
+
+  .nav-container {
+    border-bottom: 1px solid vars.$border-dark;
+  }
+
+  .chapter-folder {
+    color: vars.$accent-blue;
+  }
+
+  .chapter-section {
+    background-color: vars.$container-dark;
+    border-color: vars.$border-dark;
+    h4 {
+      color: vars.$text-color-dark;
+    }
+  }
+
+  .subject-section {
+    background-color: vars.$section-background-dark;
+    border-color: vars.$border-dark;
+    h3 {
+      color: vars.$text-color-dark;
+    }
+  }
+
+  #search-type label {
+    color: vars.$text-color-dark;
+  }
+
+  .result-container {
+    background: vars.$background-blue;
+    border-color: vars.$text-blue;
+
+    h3,
+    strong {
+      color: vars.$text-blue;
+    }
+
+    p {
+      color: vars.$text-color-dark;
+    }
+  }
+
+  .error-message {
+    background-color: vars.$dark-red;
+    border-color: vars.$dark-red;
+    color: vars.$text-color-dark;
+  }
+
+  .files-list {
+    a {
+      color: vars.$text-color-dark;
+
+      &:hover {
+        color: vars.$light-blue;
+      }
+    }
+  }
+
+  .files-section {
+    background-color: vars.$container-dark;
+    border-color: vars.$border-dark;
+    h4 {
+      color: vars.$text-color-dark;
+      font-size: 1.2em;
+    }
+  }
+
+  .status-card {
+    background: vars.$container-dark;
+    box-shadow: 0 2px 4px vars.$base-shadow;
+
+    p {
+      color: vars.$text-color-dark;
+      opacity: 0.8;
+    }
+
+    h2 {
+      color: vars.$text-color-dark;
+    }
+  }
+
+  .contact-card {
+    background: linear-gradient(
+      135deg,
+      vars.$accent-blue 0%,
+      vars.$dark-navy 100%
+    );
+    box-shadow: 0 4px 6px vars.$base-shadow;
+    color: vars.$text-white !important;
+
+    h3,
+    a,
+    i {
+      color: vars.$text-white !important;
+    }
+  }
+
+  #summaries-list > p {
+    color: vars.$text-color-dark;
+  }
+
+  .chapters-container > p {
+    color: vars.$text-color-dark;
+  }
+
+  .feature-card {
+    background: vars.$container-dark;
+    box-shadow: 0 2px 4px vars.$base-shadow;
+
+    h3 {
+      color: vars.$text-color-dark;
+    }
+
+    p {
+      color: vars.$text-color-dark;
+      opacity: 0.8;
+    }
+  }
+
+  .info-section h2 {
+    color: vars.$text-color-dark;
+  }
+
+  .google-signin-btn {
+    background-color: vars.$accent-blue;
+
+    &:hover {
+      background-color: vars.$dark-navy;
+    }
+  }
+
+  .help-card {
+    background: vars.$container-dark;
+    box-shadow: 0 2px 4px vars.$base-shadow;
+
+    p {
+      color: vars.$text-color-dark;
+    }
+  }
+
+  .link-card {
+    background: vars.$container-dark;
+    box-shadow: 0 2px 4px vars.$base-shadow;
+    color: vars.$text-color-dark;
+  }
+
+  .no-files-message {
+    color: vars.$text-no-files;
+  }
+
+  .success-message {
+    background-color: vars.$dark-green;
+    border-color: vars.$dark-green;
+  }
+
+  .loading-spinner {
+    color: vars.$text-color-dark;
+  }
+
+  .result-error {
+    background-color: vars.$dark-red;
+  }
+
+  html[lang="en"] {
+    .chapter-section,
+    .files-section {
+      border-left-color: vars.$border-dark;
+      border-right: none;
+    }
+  }
+
+  input.valid {
+    border-color: vars.$dark-green;
+  }
+
+  .summaries-container {
+    background-color: vars.$container-dark;
+    color: vars.$text-color-dark;
+  }
+}

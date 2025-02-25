@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin — Student Helper</title>
+    <link rel="stylesheet" href="static/css/main.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="static/img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="static/img/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="static/img/favicon-16x16.png"
+    />
+    <link rel="manifest" href="static/img/site.webmanifest" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <script src="static/js/config.js"></script>
+    <script src="static/js/layout/theme.js"></script>
+    <script src="static/js/translations.js"></script>
+    <script src="static/js/services/driveService.js"></script>
+    <script src="static/js/controllers/uploadController.js"></script>
+
+    <script>
+      let gapiLoaded = false;
+      let gisLoaded = false;
+      let tokenClient;
+
+      function handleClientLoad() {
+        gapi.load("client", initializeGapiClient);
+      }
+
+      async function initializeGapiClient() {
+        try {
+          await gapi.client.init({
+            apiKey: window.config.API_KEY,
+            discoveryDocs: window.config.DISCOVERY_DOCS,
+          });
+          gapiLoaded = true;
+          checkAndInitialize();
+        } catch (error) {
+          console.error("Error initializing GAPI client:", error);
+          handleGapiError();
+        }
+      }
+
+      function handleGisLoad() {
+        tokenClient = google.accounts.oauth2.initTokenClient({
+          client_id: window.config.CLIENT_ID,
+          scope: window.config.SCOPES.join(" "),
+          callback: (response) => {
+            if (response.error !== undefined) {
+              throw response;
+            }
+            document.getElementById("signin-button").style.display = "none";
+            document.getElementById("submit-button").style.display = "block";
+            displayUploadedSummaries();
+          },
+        });
+        gisLoaded = true;
+        checkAndInitialize();
+      }
+
+      window.handleAuthClick = function () {
+        if (!tokenClient) {
+          console.error("Token client not initialized");
+          return;
+        }
+
+        const button = document.querySelector(".google-signin-btn");
+        if (button) {
+          button.disabled = true;
+          button.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> <span data-translate>Signing in...</span>';
+        }
+
+        tokenClient.requestAccessToken({ prompt: "consent" });
+      };
+
+      function checkAndInitialize() {
+        if (gapiLoaded && gisLoaded) {
+          window.dispatchEvent(new Event("googleApiReady"));
+        }
+      }
+
+      function handleGapiError() {
+        const errorContainer = document.createElement("div");
+        errorContainer.className = "error-message";
+        errorContainer.textContent =
+          "Failed to load Google API. Please refresh the page.";
+        const signinButton = document.getElementById("signin-button");
+        if (signinButton) {
+          signinButton.appendChild(errorContainer);
+        }
+      }
+    </script>
+
+    <script
+      async
+      defer
+      src="https://apis.google.com/js/api.js"
+      onload="handleClientLoad()"
+      onerror="handleGapiError()"
+    ></script>
+    <script
+      async
+      defer
+      src="https://accounts.google.com/gsi/client"
+      onload="handleGisLoad()"
+      onerror="handleGapiError()"
+    ></script>
+  </head>
+  <body>
+    <nav class="nav-container">
+      <div class="nav-content">
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="utility-buttons">
+          <button
+            id="theme-toggle"
+            class="utility-btn"
+            aria-label="Toggle dark mode"
+          >
+            <i class="fas fa-moon"></i>
+          </button>
+          <button
+            id="lang-toggle"
+            class="utility-btn"
+            aria-label="Toggle language"
+          >
+            <i class="fas fa-language"></i>
+          </button>
+        </div>
+        <div class="nav-links">
+          <a href="index.html" class="nav-button" data-translate>GO HOME</a>
+          <a href="student.html" class="nav-button" data-translate
+            >STUDENT PORTAL</a
+          >
+          <a href="lookup.html" class="nav-button" data-translate
+            >STUDENT LOOKUP</a
+          >
+          <a href="links.html" class="nav-button" data-translate>GROUP LINKS</a>
+          <a href="status.html" class="nav-button" data-translate
+            >SYSTEM STATUS</a
+          >
+        </div>
+      </div>
+    </nav>
+    <header>
+      <div class="header-content">
+        <h1 data-translate>Admin Portal</h1>
+        <p data-translate>Only accessible by student leaders.</p>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <section id="upload-section">
+          <h2 data-translate>Upload Summary</h2>
+          <form id="upload-form" enctype="multipart/form-data">
+            <select id="uploader" required>
+              <option value="" selected disabled data-translate>
+                Select your name
+              </option>
+              <option value="Noor Tantawy" data-translate>Noor Tantawy</option>
+              <option value="Nervana Ebrahim" data-translate>
+                Nervana Ebrahim
+              </option>
+              <option value="Ahmed Abdulaziz" data-translate>
+                Ahmed Abdulaziz
+              </option>
+            </select>
+            <select id="subject" required>
+              <option value="" selected disabled data-translate>
+                Select a Subject
+              </option>
+            </select>
+            <select id="chapter" style="color: #767676">
+              <option value="" selected disabled data-translate>
+                Select a Chapter (Optional)
+              </option>
+            </select>
+            <input type="file" id="summary-file" required multiple />
+            <div id="signin-button">
+              <button class="google-signin-btn" type="button">
+                <i class="fab fa-google"></i>
+                <span data-translate>Sign in with Google</span>
+              </button>
+            </div>
+            <button type="submit" id="submit-button" style="display: none">
+              Upload
+            </button>
+          </form>
+        </section>
+        <section id="uploaded-summaries">
+          <h2 data-translate>Uploaded Summaries</h2>
+          <div id="summaries-list"></div>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <p>
+        <span data-translate>Made with</span> <span class="heart">❤︎</span>
+        <span data-translate>by</span>
+        <b
+          ><a href="https://github.com/iChiwi/"
+            ><span data-translate>Noor Tantawy</span></a
+          ></b
+        >
+      </p>
+    </footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const subjectSelect = document.getElementById("subject");
+        const chapterSelect = document.getElementById("chapter");
+        const signinButton = document.getElementById("signin-button");
+        const uploadForm = document.getElementById("upload-form");
+
+        const signInBtn = document.querySelector(".google-signin-btn");
+        if (signInBtn) {
+          signInBtn.onclick = function (e) {
+            e.preventDefault();
+            if (typeof handleAuthClick === "function") {
+              handleAuthClick();
+            }
+          };
+        }
+
+        populateSubjects();
+
+        window.addEventListener("googleApiReady", async () => {
+          try {
+            await displayUploadedSummaries();
+          } catch (error) {
+            console.error("Error displaying summaries:", error);
+          }
+        });
+
+        uploadForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const submitButton = document.getElementById("submit-button");
+          const errorContainer =
+            document.getElementById("upload-error") ||
+            (() => {
+              const div = document.createElement("div");
+              div.id = "upload-error";
+              div.className = "error-message";
+              uploadForm.appendChild(div);
+              return div;
+            })();
+
+          try {
+            submitButton.disabled = true;
+            errorContainer.style.display = "none";
+
+            await createFolderEmbeds();
+            await displayUploadedSummaries();
+
+            uploadForm.reset();
+
+            errorContainer.className = "success-message";
+            errorContainer.style.display = "block";
+            errorContainer.textContent = "Files uploaded successfully";
+
+            setTimeout(() => {
+              errorContainer.style.display = "none";
+            }, 3000);
+          } catch (error) {
+            console.error("Upload error:", error);
+            errorContainer.className = "error-message";
+            errorContainer.style.display = "block";
+            errorContainer.textContent =
+              error.message || "Upload failed. Please try again.";
+          } finally {
+            submitButton.disabled = false;
+
+            if (typeof storeOriginalTexts === "function") {
+              storeOriginalTexts();
+              const currentLang = localStorage.getItem("lang") || "ar";
+              setLanguage(currentLang);
+            }
+          }
+        });
+      });
+
+      async function displayUploadedSummaries() {
+        const summariesList = document.getElementById("summaries-list");
+
+        try {
+          summariesList.innerHTML =
+            '<p data-translate data-original="Loading summaries...">Loading summaries...</p>';
+          storeOriginalTexts();
+          setLanguage(localStorage.getItem("lang") || "ar");
+
+          if (typeof gapi === "undefined" || !gapi.client) {
+            throw new Error("Google API not initialized");
+          }
+
+          if (!gapi.client.getToken()) {
+            await gapi.client.init({
+              apiKey: window.config.API_KEY,
+              discoveryDocs: window.config.DISCOVERY_DOCS,
+            });
+          }
+
+          const response = await gapi.client.drive.files.list({
+            q: `'${window.config.ROOT_FOLDER_ID}' in parents and mimeType='application/vnd.google-apps.folder'`,
+            fields: "files(id, name)",
+            orderBy: "name",
+          });
+
+          if (!response.result.files.length) {
+            summariesList.innerHTML =
+              '<p data-translate data-original="No subject folders found">No subject folders found</p>';
+            storeOriginalTexts();
+            setLanguage(localStorage.getItem("lang") || "ar");
+            return;
+          }
+
+          let summariesHTML = '<div class="summaries-container">';
+
+          for (const folder of response.result.files) {
+            summariesHTML += `
+                    <div class="subject-section">
+                        <h3 data-translate data-original="${folder.name}">${folder.name}</h3>`;
+
+            const subjectFilesResponse = await gapi.client.drive.files.list({
+              q: `'${folder.id}' in parents and mimeType != 'application/vnd.google-apps.folder'`,
+              fields: "files(id, name, mimeType)",
+              orderBy: "name",
+            });
+
+            if (subjectFilesResponse.result.files.length > 0) {
+              summariesHTML += `
+                        <div class="files-section">
+                            <h4 data-translate>Material</h4>
+                            <ul class="files-list">`;
+
+              subjectFilesResponse.result.files.forEach((file) => {
+                let icon;
+                if (file.mimeType.includes("pdf")) {
+                  icon = "📄";
+                } else if (
+                  file.mimeType.includes("audio") ||
+                  file.name.toLowerCase().endsWith(".mp3")
+                ) {
+                  icon = '<i class="fas fa-music"></i>';
+                } else if (
+                  file.mimeType.includes("video") ||
+                  file.name.toLowerCase().endsWith(".mp4")
+                ) {
+                  icon = '<i class="fas fa-video"></i>';
+                } else {
+                  icon = "📝";
+                }
+                const viewUrl = `https://drive.google.com/file/d/${file.id}/view?usp=sharing`;
+                summariesHTML += `
+                            <li>
+                                <a href="${viewUrl}" target="_blank" rel="noopener">
+                                    ${icon} ${file.name}
+                                </a>
+                            </li>`;
+              });
+
+              summariesHTML += `</ul></div>`;
+            }
+
+            summariesHTML += '<div class="chapters-container">';
+
+            const chaptersResponse = await gapi.client.drive.files.list({
+              q: `'${folder.id}' in parents and mimeType='application/vnd.google-apps.folder'`,
+              fields: "files(id, name)",
+              orderBy: "name",
+            });
+
+            if (chaptersResponse.result.files.length > 0) {
+              for (const chapter of chaptersResponse.result.files) {
+                const filesResponse = await gapi.client.drive.files.list({
+                  q: `'${chapter.id}' in parents and mimeType != 'application/vnd.google-apps.folder'`,
+                  fields: "files(id, name, mimeType)",
+                  orderBy: "name",
+                });
+
+                if (filesResponse.result.files.length > 0) {
+                  summariesHTML += `
+                                <div class="chapter-section">
+                                    <h4 data-translate data-original="${chapter.name}">${chapter.name}</h4>
+                                    <ul class="files-list">`;
+
+                  filesResponse.result.files.forEach((file) => {
+                    const icon = file.mimeType.includes("pdf") ? "📄" : "📝";
+                    const viewUrl = `https://drive.google.com/file/d/${file.id}/view?usp=sharing`;
+                    summariesHTML += `
+                                    <li>
+                                        <a href="${viewUrl}" target="_blank" rel="noopener">
+                                            ${icon} ${file.name}
+                                        </a>
+                                    </li>`;
+                  });
+
+                  summariesHTML += `</ul></div>`;
+                }
+              }
+            } else {
+              summariesHTML +=
+                '<p data-translate data-original="No chapters found">No chapters found</p>';
+            }
+
+            summariesHTML += `</div></div>`;
+          }
+
+          summariesList.innerHTML = summariesHTML;
+          storeOriginalTexts();
+          setLanguage(localStorage.getItem("lang") || "ar");
+        } catch (error) {
+          console.error("Error fetching summaries:", error);
+          let errorMessage = "Error loading summaries. Please try again later.";
+
+          if (error.message === "Google API not initialized") {
+            errorMessage =
+              "Google Drive is not ready. Please refresh the page.";
+          }
+
+          summariesList.innerHTML = `
+                <div class="error-message" role="alert">
+                    <p data-translate data-original="${errorMessage}">
+                        ${errorMessage}
+                    </p>
+                </div>`;
+          storeOriginalTexts();
+          setLanguage(localStorage.getItem("lang") || "ar");
+        }
+      }
+
+      async function populateSubjects() {
+        try {
+          const subjectSelect = document.getElementById("subject");
+          const chapterSelect = document.getElementById("chapter");
+
+          subjectSelect.innerHTML =
+            '<option value="" selected disabled data-translate>Select a Subject</option>';
+
+          if (!window.subjectData) {
+            throw new Error("Subject data not loaded from config.js");
+          }
+
+          const subjects = Object.keys(window.subjectData);
+
+          subjects.forEach((subject) => {
+            const option = document.createElement("option");
+            option.value = subject;
+            option.textContent = subject;
+            option.setAttribute("data-translate", "");
+            option.setAttribute("data-original", subject);
+            subjectSelect.appendChild(option);
+          });
+
+          if (typeof storeOriginalTexts === "function") {
+            storeOriginalTexts();
+            const currentLang = localStorage.getItem("lang") || "ar";
+            setLanguage(currentLang);
+          }
+
+          subjectSelect.addEventListener("change", function () {
+            const selectedSubject = this.value;
+            chapterSelect.innerHTML =
+              '<option value="" selected disabled data-translate>Select a Chapter</option>';
+
+            if (selectedSubject && window.subjectData[selectedSubject]) {
+              const chapters = Object.keys(window.subjectData[selectedSubject]);
+              chapters.forEach((chapter) => {
+                const option = document.createElement("option");
+                option.value = chapter;
+                option.textContent = chapter;
+                option.setAttribute("data-translate", "");
+                option.setAttribute("data-original", chapter);
+                chapterSelect.appendChild(option);
+              });
+
+              if (typeof storeOriginalTexts === "function") {
+                storeOriginalTexts();
+                const currentLang = localStorage.getItem("lang") || "ar";
+                setLanguage(currentLang);
+              }
+            }
+          });
+        } catch (error) {
+          console.error("Error populating subjects:", error);
+        }
+      }
+    </script>
+    <script src="static/js/layout/nav.js"></script>
+    <button class="scroll-top" aria-label="Scroll to top">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M18 15l-6-6-6 6" />
+      </svg>
+    </button>
+  </body>
+</html>

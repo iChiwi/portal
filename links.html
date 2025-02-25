@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Links — Student Helper</title>
+    <link rel="stylesheet" href="static/css/main.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="static/img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="static/img/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="static/img/favicon-16x16.png"
+    />
+    <link rel="manifest" href="static/img/site.webmanifest" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="static/js/layout/theme.js"></script>
+    <script src="static/js/translations.js"></script>
+  </head>
+  <body>
+    <nav class="nav-container">
+      <div class="nav-content">
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="utility-buttons">
+          <button
+            id="theme-toggle"
+            class="utility-btn"
+            aria-label="Toggle dark mode"
+          >
+            <i class="fas fa-moon"></i>
+          </button>
+          <button
+            id="lang-toggle"
+            class="utility-btn"
+            aria-label="Toggle language"
+          >
+            <i class="fas fa-language"></i>
+          </button>
+        </div>
+        <div class="nav-links">
+          <a href="index.html" class="nav-button" data-translate>GO HOME</a>
+          <a href="student.html" class="nav-button" data-translate
+            >STUDENT PORTAL</a
+          >
+          <a href="lookup.html" class="nav-button" data-translate
+            >STUDENT LOOKUP</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <header>
+      <div class="header-content">
+        <h1 data-translate>Group Links</h1>
+        <p data-translate>
+          Find group links by selecting the relevant category
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <section id="group-section">
+          <h2 data-translate>Group Links</h2>
+          <div class="group-links">
+            <select id="category-select" class="group-select" required>
+              <option value="" selected disabled data-translate>
+                Select Category
+              </option>
+              <option value="official" data-translate>Official Links</option>
+              <option value="section" data-translate>Section Links</option>
+              <option value="subject" data-translate>Subject Links</option>
+            </select>
+
+            <select
+              id="section-group-select"
+              class="group-select"
+              style="display: none"
+              required
+            >
+              <option value="" selected disabled data-translate>
+                Select Group
+              </option>
+              <option value="A1" data-translate>Group A1</option>
+              <option value="A2" data-translate>Group A2</option>
+              <option value="A3" data-translate>Group A3</option>
+              <option value="A4" data-translate>Group A4</option>
+              <option value="A5" data-translate>Group A5</option>
+            </select>
+            <div id="links-container"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        <span data-translate>Made with</span> <span class="heart">❤︎</span>
+        <span data-translate>by</span>
+        <b
+          ><a href="https://github.com/iChiwi/"
+            ><span data-translate>Noor Tantawy</span></a
+          ></b
+        >
+      </p>
+    </footer>
+
+    <script src="static/js/layout/nav.js"></script>
+    <button class="scroll-top" aria-label="Scroll to top">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M18 15l-6-6-6 6" />
+      </svg>
+    </button>
+    <script src="static/js/controllers/linkController.js"></script>
+  </body>
+</html>

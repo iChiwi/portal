@@ -1,0 +1,89 @@
+@use "../core/variables" as vars;
+
+body {
+  background-color: vars.$background-light;
+  color: vars.$text-color-light;
+  direction: rtl;
+  display: flex;
+  flex-direction: column;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  padding: 0;
+  text-align: right;
+}
+
+html {
+  &[lang="ar"] {
+    .files-section {
+      border-left: none;
+      border-right: 4px solid vars.$accent-blue;
+      padding-right: 1rem;
+    }
+    .chapter-section {
+      border-left: none;
+      padding-right: 1rem;
+      border-right: 4px solid vars.$accent-blue;
+    }
+  }
+
+  &[lang="en"] {
+    body {
+      direction: ltr;
+      text-align: left;
+    }
+    .chapter-section {
+      border-left: 4px solid vars.$accent-blue;
+      border-right: none;
+      padding-left: 1rem;
+    }
+    .files-section {
+      border-left: 4px solid vars.$accent-blue;
+      padding-left: 1rem;
+      border-right: none;
+    }
+  }
+
+  &[dir="rtl"] {
+    .status-card {
+      h2 {
+        gap: 0.3rem;
+      }
+
+      p {
+        margin: 0.5rem 1.5rem 0 0;
+      }
+    }
+
+    .status-indicator {
+      margin-left: 8px;
+      margin-right: 0;
+    }
+  }
+}
+
+main {
+  background-color: vars.$background-light;
+  flex: 1;
+
+  section {
+    background-color: vars.$section-background-light;
+    border: 1px solid vars.$border-light;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    padding: 20px;
+  }
+}
+
+.data-theme-text {
+  color: vars.$text-color-light;
+}
+
+.container {
+  background-color: vars.$container-light;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px vars.$base-shadow;
+  margin: 20px auto;
+  max-width: 800px;
+  padding: 20px;
+}

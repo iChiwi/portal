@@ -1,0 +1,20 @@
+@use "../core/variables" as vars;
+
+footer {
+  background-color: vars.$dark-navy;
+  color: vars.$text-white;
+  height: 60px;
+  margin-top: auto;
+  padding: 15px 0;
+  text-align: center;
+  width: 100%;
+
+  .heart {
+    color: vars.$accent-brick;
+  }
+
+  a {
+    color: vars.$text-white;
+    text-decoration: none;
+  }
+}
